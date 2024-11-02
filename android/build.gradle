@@ -1,0 +1,34 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
+buildscript {
+    repositories {
+        google() // Thêm dòng này để lấy các thư viện từ Google
+        mavenCentral() // Thêm dòng này để lấy các thư viện từ Maven Central
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.0' // Hoặc phiên bản mới hơn
+    }
+    ext {
+        compileSdkVersion = 33  // or latest SDK version
+        minSdkVersion = 20
+        targetSdkVersion = 33
+    }
+
+}
